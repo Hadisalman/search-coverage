@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+import rospy
+from visualization_msgs.msg import Marker
+
+def talker():
+
+	topic='visualization_marker'
+	publisher=rospy.Publisher(topic,Marker,queue_size=1000)
+	rospy.init_node('vis_marker',anonymous=True)
+	rate = rospy.Rate(100)
+	marker=Marker()
+
+	marker.header.frame_id = "/my_frame"
+	marker.type = marker.SPHERE
+	marker.action = marker.ADD
+	marker.scale.x = 2
+	marker.scale.y = 2
+	marker.scale.z = 2
+	marker.color.a = 1.0
+	marker.color.r = 1.0
+	marker.color.g = 1.0
+	marker.color.b = 0.0
+
+
+	for i in range(0,1000):
+		marker.pose.orientation.w = 1.0
+		marker.pose.position.x = i
+		marker.pose.position.y = i 
+		marker.pose.position.z = 10 
+		publisher.publish(marker)
+		rate.sleep()
+	
+if __name__=='__main__':
+	talker()
