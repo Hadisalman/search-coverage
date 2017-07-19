@@ -1,21 +1,31 @@
 import numpy as np
-from numpy import matrix
 from math import pi,sqrt
+			 
+def GetFourierCoeff(mu,Nkx,Nky,Lx,Ly,X,Y):
+	"""Function that calculates the Fourier Coefficients
 
-def GetFourierCoeff(opt,X,Y):
+	Args:
+		1.mu(matrix): Information map
+		2.Nkx(integer):
+		3.Nky(integer):
+		4.Lx(integer):
+		5.Ly(integer):
+		6.X(matrix):
+		7.Y(matrix):
 
-	mu=opt.ergmu
-	Nkx=opt.ergNkx
-	Nky=opt.ergNky
+	Returns:
+		1.HK(matrix):
+		2.muk(matrix):
 
-	opt.ergmuk=matrix(np.zeros((Nkx,Nky)))
+	"""	
+	muk=np.matrix(np.zeros((Nkx,Nky)))
 
-	temp=matrix((np.append([1],sqrt(0.5)*matrix(np.ones((1,Nky-1))))))
-	opt.ergHK=np.multiply(sqrt(opt.Lx*opt.Ly),temp.T*temp)
+	temp=np.matrix((np.append([1],sqrt(0.5)*np.matrix(np.ones((1,Nky-1))))))
+	HK=np.multiply(sqrt(Lx*Ly),temp.T*temp)
 
 	for kx in range(0,Nkx):
 		for ky in range(0,Nky):
-			opt.ergmuk[kx,ky]=(matrix(np.multiply(np.multiply(mu,np.cos(kx*pi*X/opt.Lx)),np.cos(ky*pi*Y/opt.Ly)))).sum()/opt.ergHK[ky,kx]
+			muk[kx,ky]=(np.matrix(np.multiply(np.multiply(mu,np.cos(kx*pi*X/Lx)),np.cos(ky*pi*Y/Ly)))).sum()/HK[ky,kx]
 
 
-	return	opt	
+	return	HK,muk	

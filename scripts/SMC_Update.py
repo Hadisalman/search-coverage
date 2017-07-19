@@ -3,16 +3,28 @@ from numpy import matrix
 from math import pi,cos,sin
 from IPython import embed
 
-def SMC_Update(pose,opt,time,Ck):
-	
+def SMC_Update(pose,opt,erg,time,Ck):
+"""Function that updates the position of the agents
+
+	Args:
+		pose(tuple):the initial posotions of the agents
+		opt(tuple):
+		time(float):
+		Ck(matrix):
+
+	Returns:
+		pose(tuple):the updated positions of the agents
+		Ck(matrix):
+
+"""				
 	Lx=opt.Lx
 	Ly=opt.Ly
 	dt=opt.dt
-	KX=opt.ergKX
-	KY=opt.ergKY
-	HK=opt.ergHK
-	muk=opt.ergmuk
-	LK=opt.ergLK
+	KX=erg.KX
+	KY=erg.KY
+	HK=erg.HK
+	muk=erg.muk
+	LK=erg.LK
 
 	for iagent in range(0,opt.nagents):
 		xrel=pose.x[iagent]-opt.xmin
