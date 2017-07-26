@@ -1,6 +1,8 @@
 import numpy as np
 from numpy import matlib
 import math
+from IPython import embed
+from TruncatedGaussian import TruncatedGaussian
 
 def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 
@@ -43,7 +45,8 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 		while n<N and (rho>rhoThr or s<maxSample):
 			R=np.random.multivariate_normal(mu,sigma,s)
 			# embed()
-			#R=np.matrix(R)[(np.matrix(R)*np.matrix(A)<=np.matlib.repmat(b,np.matrix(R).shape[0],1)).sum(axis=1)==np.matrix(A).shape[1],:]
+			temp = np.array((np.matrix(R)*np.matrix(A)<=np.matlib.repmat(b,np.matrix(R).shape[0],1)).sum(axis=1)==np.matrix(A).shape[1]).flatten()
+			R=np.matrix(R)[np.nonzero(temp)[0],:]
 			if R.shape[0]>0:
 				X[(n):min(N,(n+R.shape[0])),:]=R[0:min(N-n,R.shape[0]),:]
 				nar=nar + min(N,(n+R.shape[0]))-n
@@ -64,7 +67,7 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 			x=np.array(mu)
 	SigmaInv=np.linalg.inv(sigma)
 	n=nar
-	
+
 	while n<N:
 		for i in range(0,p):
 			Sigmai_i=sigma[range(0,i-1)+ range(i,p),i]
@@ -74,8 +77,8 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 			x_i=x[range(0,i-1)+range(i,p)]
 
 			mu_i=np.array(mu)[range(0,i-1)+range(i,p)]
-
-			mui=mu[i]+Sigmai_i.T*Sigmai_i_iInv*(x_i.T- mu_i.T)
+			# embed()
+			mui=mu[i]+Sigmai_i.T*Sigmai_i_iInv*(np.matrix(x_i).T- np.matrix(mu_i).T)
 
 			s2i=sigma[i,i]-Sigmai_i.T*Sigmai_i_iInv*Sigmai_i
 
@@ -88,12 +91,12 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 			lb=np.max(c[Ai<0])
 			if not lb:
 				lb=-float("inf")
-			
-			ub=	np.min(c[Ai>0])
+
+			ub=	np.min(np.array(c)[0][Ai>0])
 			if not ub:
 				ub=float("inf")
-
-			x[i]=mui+TruncatedGaussian(-np.sqrt(s2i),[lb,ub]-mui)	
+			print("HEY")
+			x[i]=mui+TruncatedGaussian(-np.sqrt(s2i),[lb,ub]-mui,N)	
 		n=n+1
 		X[n,:]=x
 		ngibbs=ngibbs+1

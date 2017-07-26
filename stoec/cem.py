@@ -101,7 +101,7 @@ def cem(fun,x0,opts,varargin,agents,erg):
 			A=np.concatenate((-np.identity(n),np.identity(n)))
 			B=np.concatenate((-opts.lb,opts.ub))
 			xs=rmvnrnd(mu,C,N,A,B,100,0)
-			
+			print(xs[20])
 		else:
 			xs=np.random.multivariate_normal(mu,C,N)
 			xs=xs.T
@@ -120,7 +120,8 @@ def cem(fun,x0,opts,varargin,agents,erg):
 
 			iss=np.argsort(cs)
 			cs= np.sort(cs)
-			xes=xs[:,iss[0:nf]]
+			
+			xes=xs[:,iss[0:int(nf)]]
 			xes =np.reshape(xes,xes.shape[0:2],'F')
 
 			mu=(1-v)*mu[-1]+v*np.mean(xes.T,axis=0)
