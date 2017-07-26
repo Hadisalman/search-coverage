@@ -1,0 +1,15 @@
+import numpy as np
+import cv2
+
+img=cv2.imread('/home/asalman/sampling_based_ergodic_coverage/Fig_4_large_sensor_footprint/obstacleMap.png',0) #read image
+img=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #covert it from rgb to gray scale
+img=cv2.normalize(img.astype('float'), None, 0.0, 1.0, cv2.NORM_MINMAX) #normalize
+print(img) 
+cv2.imshow('image',img)
+out = cv2.normalize(img.astype('float'), None, 0.0, 1.0, cv2.NORM_MINMAX)
+k = cv2.waitKey(0)
+if k == 27:         # wait for ESC key to exit
+    cv2.destroyAllWindows()
+elif k == ord('s'): # wait for 's' key to save and exit
+    cv2.imwrite('messigray.png',img)
+    cv2.destroyAllWindows()
