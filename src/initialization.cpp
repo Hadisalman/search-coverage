@@ -52,7 +52,7 @@ void initialization(opt1 *opt,pos *pose)
 	opt->erg.LK=((MatrixXd::Ones(opt->erg.Nky,opt->erg.Nky)+ (opt->erg.KX).array().pow(2).matrix() + (opt->erg.KY).array().pow(2).matrix()).array().pow(opt->erg.s).matrix()).cwiseInverse();
 
 	// simulation params
-	opt->simNsteps=5000;
+	opt->simNsteps=2500;
 	opt->simdt=(1e-1);
 
 }

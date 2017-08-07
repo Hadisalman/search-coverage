@@ -102,10 +102,10 @@ int main(int argc, char **argv)
  		pose_msg.data.clear();
  		pose_msg.data.push_back(pose.x(0));
  		pose_msg.data.push_back(pose.y(0));
- 		pose_msg.data.push_back(pose.x(1));
- 		pose_msg.data.push_back(pose.y(1));
- 		pose_msg.data.push_back(pose.x(2));
- 		pose_msg.data.push_back(pose.y(2));
+ 		//pose_msg.data.push_back(pose.x(1));
+ 		// pose_msg.data.push_back(pose.y(1));
+ 		// pose_msg.data.push_back(pose.x(2));
+ 		// pose_msg.data.push_back(pose.y(2));
  		// pose_pub.publish(pose_msg);
  		pose_pub.publish(pose_msg);
  		
@@ -116,6 +116,7 @@ int main(int argc, char **argv)
 	 	
 	 		
 	 	}
+	 	
 	 tend = time(0); 
 	cout << "It took "<< difftime(tend, tstart) <<" second(s)."<< endl; 	
 
