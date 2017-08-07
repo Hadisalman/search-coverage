@@ -18,7 +18,7 @@ def plot_initial(opt,agents):
 	plt.imshow(opt.mapWithObstacles)
 	#plt.axis('tight')
 	#plt.axis('equal')
-
+	plt.show()
 	r=10
 	ang=np.arange(0,2*pi+0.01,0.01)
 	x1=65

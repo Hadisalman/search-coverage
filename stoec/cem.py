@@ -100,8 +100,9 @@ def cem(fun,x0,opts,varargin,agents,erg):
 			n=mu.size
 			A=np.concatenate((-np.identity(n),np.identity(n)))
 			B=np.concatenate((-opts.lb,opts.ub))
+			# embed()
 			xs=rmvnrnd(mu,C,N,A,B,100,0)
-			print(xs[20])
+			# print(xs[20])
 		else:
 			xs=np.random.multivariate_normal(mu,C,N)
 			xs=xs.T
@@ -112,24 +113,26 @@ def cem(fun,x0,opts,varargin,agents,erg):
 			fi=fun(xs[:,i],varargin,agents,erg)
 			
 			if len([fi])>1:
-				cs[i,0]=fi*fi/2
+				cs[i]=fi*fi/2
 			else:
-				cs[i,0]=fi
+				cs[i]=fi
 
 		if not opts.tilt:
 
-			iss=np.argsort(cs)
-			cs= np.sort(cs)
+			iss=np.argsort(cs.flatten())
+			cs= np.sort(cs.flatten())
 			
-			xes=xs[:,iss[0:int(nf)]]
+			xes=xs[:,iss.flatten().tolist()[0:int(nf)]]
+
 			xes =np.reshape(xes,xes.shape[0:2],'F')
 
 			mu=(1-v)*mu[-1]+v*np.mean(xes.T,axis=0)
-			C=(1-v)*C+v*np.cov(xes)
-
-			if cs[0,0]<c:
-				x=xes[:,1]
-				c=cs[0,0]
+			# embed()
+			C=np.multiply((1-v),C)+v*np.cov(xes)
+			# embed()
+			if cs[0]<c:
+				x=xes[:,0]
+				c=cs[0]
 
 		else:
 			if j==1:

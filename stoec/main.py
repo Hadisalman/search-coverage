@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+a#!/usr/bin/env python
 
 import numpy as np
 from numpy import matlib
@@ -106,7 +106,7 @@ if __name__ == "__main__":
 	opt.xss[:,2]=np.reshape(opt.Z,(X.size,1),'F')
 
 	opt.utility=utility/utility.sum()
-	opt.nagents=1
+	opt.nagents=3
 	
 	agents.xi=np.matrix([[120,30,0,90*pi/180],[130,130,0,270*pi/180],[30,120,0,270*pi/180]])
 	agents.xps=agents.xi
@@ -160,9 +160,15 @@ if __name__ == "__main__":
 			# agents.xps[iagent]=np.concatenate(agents.xps[iagent],np.xs[1:,:])
 			full_trajectory = full_trajectory + xs.tolist()
 			
-			plt.figure(1)
-			plt.plot(np.array(full_trajectory)[:,0],np.array(full_trajectory)[:,1])
-			plt.axis((opt.xmin,opt.xmax,opt.ymin,opt.ymax))
+			# plt.figure(1)
+			
+			# plt.title('Optimal trajectory')
+			
+			
+				
+			
+			# plt.plot(np.array(full_trajectory)[:,0],np.array(full_trajectory)[:,1])
+			# plt.axis((opt.xmin,opt.xmax,opt.ymin,opt.ymax))
 
 
 			if opt.algorithm=='ergodic':
@@ -184,4 +190,4 @@ if __name__ == "__main__":
 		save_traj_stat[:,k]=np.reshape(traj_stat_normalized,(traj_stat_normalized.size,1),'F').T  
 		euclidean_dist[k,0]=np.square(traj_stat_normalized-opt.utility).sum()
 		BhattDistance[k,0]=evaluateBhattacharyyaDist(traj_stat_normalized,erg.mu)
-		plt.show()
+		# plt.show()

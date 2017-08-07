@@ -17,11 +17,12 @@ def gen_traj_CE(opt,ce,agents,erg):
 		ce.Flag=1
 		
 		z,_,_,C = cem(traj_cost,z,ce,opt,agents,erg)
-
+		# embed()
 		# print(z)
 		ce.C=C
 		# embed()
 		xs=traj(z,opt,agents)
+		# embed()
 		# embed()
 		#plotting
 	

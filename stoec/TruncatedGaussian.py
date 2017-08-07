@@ -2,6 +2,8 @@ import numpy as np
 from math import pi
 import scipy.special
 import scipy.optimize
+from IPython import embed
+
 
 def asymcdfinv(y,erf1,de,a):
 
@@ -27,7 +29,7 @@ def meantrunc(lower,upper,s):
 	return m
 
 def vartrunc(lower,upper,s):
-
+	
 	if s == float("inf"):
 		v=pow((upper-lower),2/12)
 	else:
@@ -58,15 +60,19 @@ def stdtrunc(lower,upper,s):
 
 	return stdt
 
-def scz(sc,targetsigma2,lower,upper):
-
+def scz(sc,*data):
+	targetsigma2,lower,upper=data
+	# embed()
+	# print("hi")
+	
 	res=vartrunc(lower,upper,sc)-targetsigma2- np.square(meantrunc(lower,upper,sc))
+	
 	return res
 
 
 
 def TruncatedGaussian(sigma,range,varargin):
-
+	
 	PREVSIGMA=sigma
 	PREVRANGE=range
 	PREVSIGMAC=0
@@ -81,6 +87,7 @@ def TruncatedGaussian(sigma,range,varargin):
 
 	sigma=np.float32(np.abs(sigma))
 	
+	
 	n=varargin
 	if sigma<0:
 		sigmac=sigma
@@ -92,13 +99,16 @@ def TruncatedGaussian(sigma,range,varargin):
 			sigmac=float("inf")
 		
 		elif [sigma,range]==[PREVSIGMA,PREVRANGE]:
-			sigmac=PREVSIGMA
+			sigmac=PREVSIGMAC
 			
 		else:
-			sigmac,_,flag,_=scipy.optimize.fsolve(scz,sigma)
-			sigmac=np.abs(sigmac)
-			if flag<0:
-				print("error:TruncatedGaussian:fzerofailled")
+			# embed()
+			data=(pow(sigma,2),range[0],range[1])
+			sigmac=scipy.optimize.fsolve(scz,sigma,args=data)
+			sigmac=np.abs(sigmac)[0]
+			# embed()
+			# if flag<0:
+				# print("error:TruncatedGaussian:fzerofailled")
 
 			PREVSIGMA=sigmac
 			PREVRANGE=range
@@ -150,6 +160,6 @@ def TruncatedGaussian(sigma,range,varargin):
 	X=cdfinv(np.random.rand(n,n))	
 
 	X=np.maximum(np.minimum(X,range[1]),range[0])	
-
+	# embed()
 	
 	return X

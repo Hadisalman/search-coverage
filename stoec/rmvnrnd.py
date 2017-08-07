@@ -34,7 +34,8 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 	X=np.zeros((N,p))
 	nar=0
 	ngibbs=0
-	rho=1
+	rho=1.0
+
 	if rhoThr<1:
 
 		n=0
@@ -44,9 +45,10 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 		s=N
 		while n<N and (rho>rhoThr or s<maxSample):
 			R=np.random.multivariate_normal(mu,sigma,s)
-			# embed()
 			temp = np.array((np.matrix(R)*np.matrix(A)<=np.matlib.repmat(b,np.matrix(R).shape[0],1)).sum(axis=1)==np.matrix(A).shape[1]).flatten()
 			R=np.matrix(R)[np.nonzero(temp)[0],:]
+			# print(R.shape)
+
 			if R.shape[0]>0:
 				X[(n):min(N,(n+R.shape[0])),:]=R[0:min(N-n,R.shape[0]),:]
 				nar=nar + min(N,(n+R.shape[0]))-n
@@ -59,7 +61,7 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 				s=min([maxSample,10*s])
 
 			passes=passes+1
-			
+		
 	if nar<N:
 		if nar>	0:
 			x=X[nar-1,:]
@@ -67,38 +69,40 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 			x=np.array(mu)
 	SigmaInv=np.linalg.inv(sigma)
 	n=nar
-
+	# embed()
 	while n<N:
 		for i in range(0,p):
-			Sigmai_i=sigma[range(0,i-1)+ range(i,p),i]
+			Sigmai_i=sigma[range(0,i-1)+ range(i+1,p),i]
 
-			Sigmai_i_iInv = SigmaInv[range(0,i-1)+range(i,p),range(0,i-1)+range(i,p)]-SigmaInv[range(0,i-1)+range(i,p),i]*SigmaInv[range(0,i-1)+range(i,p),i].T/SigmaInv[i,i]
+			Sigmai_i_iInv = SigmaInv[range(0,i-1)+range(i+1,p),range(0,i-1)+range(i+1,p)]-SigmaInv[range(0,i-1)+range(i+1,p),i]*SigmaInv[range(0,i-1)+range(i+1,p),i].T/SigmaInv[i,i]
 
-			x_i=x[range(0,i-1)+range(i,p)]
+			x_i=x[range(0,i-1)+range(i+1,p)]
 
-			mu_i=np.array(mu)[range(0,i-1)+range(i,p)]
+			mu_i=np.array(mu)[range(0,i-1)+range(i+1,p)]
 			# embed()
 			mui=mu[i]+Sigmai_i.T*Sigmai_i_iInv*(np.matrix(x_i).T- np.matrix(mu_i).T)
 
 			s2i=sigma[i,i]-Sigmai_i.T*Sigmai_i_iInv*Sigmai_i
 
-			A_i=A[range(0,i-1)+range(i,p),:]
+			A_i=A[range(0,i-1)+range(i+1,p),:]
 
 			Ai=A[i,:]
 			
 			c=np.divide((b- np.matrix(x_i)*A_i),Ai)
 
-			lb=np.max(c[Ai<0])
+
+			lb=np.max(np.array(c)[0][Ai<0])
 			if not lb:
 				lb=-float("inf")
 
 			ub=	np.min(np.array(c)[0][Ai>0])
 			if not ub:
 				ub=float("inf")
-			print("HEY")
-			x[i]=mui+TruncatedGaussian(-np.sqrt(s2i),[lb,ub]-mui,N)	
+			# embed()
+			x[i]=mui[0,0]+TruncatedGaussian(-np.sqrt(s2i)[0,0],[lb,ub]-mui[0,0],1)	
 		n=n+1
-		X[n,:]=x
+		# embed()
+		X[n-1,:]=x
 		ngibbs=ngibbs+1
 
 	return X
