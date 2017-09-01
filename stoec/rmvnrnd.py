@@ -87,6 +87,7 @@ def rmvnrnd(mu,sigma,N,A,b,rhoThr,debug):
 			A_i=A[range(0,i-1)+range(i+1,p),:]
 
 			Ai=A[i,:]
+			# embed()
 			
 			c=np.divide((b- np.matrix(x_i)*A_i),Ai)
 

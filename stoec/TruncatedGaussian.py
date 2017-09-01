@@ -103,6 +103,7 @@ def TruncatedGaussian(sigma,range,varargin):
 			
 		else:
 			# embed()
+			
 			data=(pow(sigma,2),range[0],range[1])
 			sigmac=scipy.optimize.fsolve(scz,sigma,args=data)
 			sigmac=np.abs(sigmac)[0]
