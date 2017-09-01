@@ -99,16 +99,18 @@ int main(int argc, char **argv)
  		}
  		// pose_msg.x =  pose.x(2);
  		// pose_msg.y =  pose.y(2);
+ 		if(i%20==0){
  		pose_msg.data.clear();
+ 		cout<<pose.x(0)<<endl;
  		pose_msg.data.push_back(pose.x(0));
  		pose_msg.data.push_back(pose.y(0));
- 		//pose_msg.data.push_back(pose.x(1));
- 		// pose_msg.data.push_back(pose.y(1));
- 		// pose_msg.data.push_back(pose.x(2));
- 		// pose_msg.data.push_back(pose.y(2));
+ 		pose_msg.data.push_back(pose.x(1));
+ 		pose_msg.data.push_back(pose.y(1));
+ 		pose_msg.data.push_back(pose.x(2));
+ 		pose_msg.data.push_back(pose.y(2));
  		// pose_pub.publish(pose_msg);
  		pose_pub.publish(pose_msg);
- 		
+ 		}
 
  		ck=Ck/opt.nagents/t;
 
