@@ -101,7 +101,7 @@ int main(int argc, char **argv)
  		// pose_msg.y =  pose.y(2);
  		if(i%20==0){
  		pose_msg.data.clear();
- 		cout<<pose.x(0)<<endl;
+ 		// cout<<pose.x(0)<<endl;
  		pose_msg.data.push_back(pose.x(0));
  		pose_msg.data.push_back(pose.y(0));
  		pose_msg.data.push_back(pose.x(1));
