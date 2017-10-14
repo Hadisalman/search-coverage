@@ -1,3 +1,9 @@
+# ///-----------------------------------------------------------------
+# ///   Description:    <STOEC>
+# ///   Author:         <Hadi Salman>                    
+# ///   Date:           <Oct 13th 2017>
+# ///   Revision History: ---
+# ///-----------------------------------------------------------------
 import numpy as np
 from math import exp,pi,sqrt,log
 from collections import namedtuple

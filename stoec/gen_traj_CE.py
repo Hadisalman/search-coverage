@@ -1,3 +1,10 @@
+# ///-----------------------------------------------------------------
+# ///   Description:    <STOEC>
+# ///   Author:         <Hadi Salman>                    
+# ///   Date:           <Oct 13th 2017>
+# ///   Revision History: ---
+# ///-----------------------------------------------------------------
+
 import numpy as np
 import time
 from cem import cem

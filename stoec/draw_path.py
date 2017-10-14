@@ -1,3 +1,9 @@
+# ///-----------------------------------------------------------------
+# ///   Description:    <STOEC>
+# ///   Author:         <Hadi Salman>                    
+# ///   Date:           <Oct 13th 2017>
+# ///   Revision History: ---
+# ///-----------------------------------------------------------------
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np

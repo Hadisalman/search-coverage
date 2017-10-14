@@ -1,3 +1,9 @@
+# ///-----------------------------------------------------------------
+# ///   Description:    <STOEC>
+# ///   Author:         <Hadi Salman>                    
+# ///   Date:           <Oct 13th 2017>
+# ///   Revision History: ---
+# ///-----------------------------------------------------------------
 from math import pow
 import numpy as np
 def Calculate_Ergodicity(ck,muk,Nagents):

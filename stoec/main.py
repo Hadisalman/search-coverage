@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-
+# ///-----------------------------------------------------------------
+# ///   Description:    <STOEC>
+# ///   Author:         <Hadi Salman>                    
+# ///   Date:           <Oct 13th 2017>
+# ///   Revision History: ---
+# ///-----------------------------------------------------------------
 import numpy as np
 from numpy import matlib
 from collections import namedtuple 
