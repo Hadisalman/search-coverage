@@ -52,13 +52,13 @@ def initialize_gen_traj_CE():
 
 	ce.N=40
 	ce.v=0.8
-	ce.iter=6
+	ce.iter=2
 	ce.sigma=0
 	
 	ce.C0=np.matrix(np.diag(np.concatenate(np.matlib.repmat([1],opt.sn*2,1))))
 	ce.z0=np.matlib.repmat(np.matrix([1,0]).T,opt.sn,1)
 
-	opt.stages=10
+	opt.stages=100
 	opt.devBias=0.001
 
 	#need to check opt.map
@@ -195,4 +195,4 @@ if __name__ == "__main__":
 		save_traj_stat[:,k]=np.reshape(traj_stat_normalized,(traj_stat_normalized.size,1),'F').T  
 		euclidean_dist[k,0]=np.square(traj_stat_normalized-opt.utility).sum()
 		BhattDistance[k,0]=evaluateBhattacharyyaDist(traj_stat_normalized,erg.mu)
-		plt.show()
+		plt.pause(0.01)
